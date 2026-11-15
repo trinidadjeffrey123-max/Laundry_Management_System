@@ -23,7 +23,7 @@ app.secret_key = os.environ.get("SECRET_KEY", "laundry_management_secret_key_202
 # MYSQL DATABASE SETTINGS (Environment variable aware)
 # ------------------------------------------------------------
 MYSQL_HOST = os.environ.get("DB_HOST", "localhost")
-MYSQL_PORT = int(os.environ.get("DB_PORT", 3306))
+MYSQL_PORT = int(os.environ.get("DB_PORT", 4000))
 MYSQL_USER = os.environ.get("DB_USER", "root")
 MYSQL_PASSWORD = os.environ.get("DB_PASSWORD", "")
 MYSQL_DATABASE = os.environ.get("DB_NAME", "laundry_management")
