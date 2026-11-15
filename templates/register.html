@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | Laundry Management System</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Link to the separate CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="login-page">
+
+        <!-- ================= LEFT BRANDING SECTION ================= -->
+        <section class="brand-section">
+
+            <!-- Decorative bubbles -->
+            <span class="bubble bubble-1"></span>
+            <span class="bubble bubble-2"></span>
+            <span class="bubble bubble-3"></span>
+            <span class="bubble bubble-4"></span>
+
+            <!-- Logo -->
+            <div class="brand-logo">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-shirt"></i>
+                </div>
+
+                <div>
+                    <h2>Laundry</h2>
+                    <span>Management System</span>
+                </div>
+            </div>
+
+            <!-- Main heading -->
+            <div class="brand-content">
+                <h1>
+                    Join Us
+                    <span>Today</span>
+                </h1>
+
+                <p>
+                    Create your account and start managing your laundry business
+                    with ease and efficiency.
+                </p>
+
+                <!-- Features -->
+                <div class="feature-list">
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-user-plus"></i>
+                        </div>
+                        <span>Quick Registration</span>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                        <span>Secure Account</span>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-rocket"></i>
+                        </div>
+                        <span>Get Started Now</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Laundry illustration -->
+            <div class="laundry-illustration">
+
+                <div class="washing-machine">
+                    <div class="machine-top">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <div class="machine-door">
+                        <div class="machine-glass">
+                            <div class="water"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Basket -->
+                <div class="laundry-basket">
+                    <div class="towel towel-white"></div>
+                    <div class="towel towel-blue"></div>
+                    <div class="towel towel-light"></div>
+
+                    <div class="basket-body"></div>
+                </div>
+
+                <!-- Plant -->
+                <div class="plant">
+                    <div class="leaf leaf-1"></div>
+                    <div class="leaf leaf-2"></div>
+                    <div class="leaf leaf-3"></div>
+                    <div class="leaf leaf-4"></div>
+                    <div class="plant-pot"></div>
+                </div>
+
+            </div>
+
+            <div class="tagline">
+                Clean Clothes, Happier Days!
+            </div>
+
+        </section>
+
+
+        <!-- ================= RIGHT REGISTER SECTION ================= -->
+        <section class="login-section">
+
+            <div class="login-card">
+
+                <!-- Decorative stars -->
+                <div class="sparkle sparkle-one">✦</div>
+                <div class="sparkle sparkle-two">✦</div>
+
+                <div class="login-header">
+                    <span>Create Account</span>
+
+                    <h2>Sign Up</h2>
+
+                    <p>
+                        Fill in the details to create your account
+                    </p>
+                </div>
+
+
+                <!-- Error messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="login-error" role="alert" style="background: {% if category == 'success' %}rgba(8, 168, 90, 0.1){% else %}rgba(239, 68, 68, 0.1){% endif %}; color: {% if category == 'success' %}#08a85a{% else %}#ef4444{% endif %};">
+                                <i class="fa-solid {% if category == 'success' %}fa-circle-check{% else %}fa-circle-exclamation{% endif %}"></i>
+                                <span>{{ message }}</span>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+
+                <!-- Registration Form -->
+                <form action="{{ url_for('register') }}" method="POST" autocomplete="off">
+
+                    <!-- Full Name -->
+                    <div class="form-group">
+
+                        <label for="full_name">Full Name</label>
+
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-id-card"></i>
+
+                            <input
+                                type="text"
+                                id="full_name"
+                                name="full_name"
+                                placeholder="Enter your full name"
+                                autocomplete="off"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+                    <!-- Username -->
+                    <div class="form-group">
+
+                        <label for="username">Username</label>
+
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-user"></i>
+
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                placeholder="Choose a username"
+                                autocomplete="off"
+                                autocapitalize="none"
+                                autocorrect="off"
+                                spellcheck="false"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+
+                    <!-- Password -->
+                    <div class="form-group">
+
+                        <label for="password">Password</label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Create a password"
+                                autocomplete="new-password"
+                                spellcheck="false"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword('password', 'eyeIconPassword')"
+                            >
+                                <i class="fa-solid fa-eye-slash" id="eyeIconPassword"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="form-group">
+
+                        <label for="confirm_password">Confirm Password</label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input
+                                type="password"
+                                id="confirm_password"
+                                name="confirm_password"
+                                placeholder="Confirm your password"
+                                autocomplete="new-password"
+                                spellcheck="false"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword('confirm_password', 'eyeIconConfirm')"
+                            >
+                                <i class="fa-solid fa-eye-slash" id="eyeIconConfirm"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div id="passwordMatchError" class="login-error" style="display: none;">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span>Passwords do not match.</span>
+                    </div>
+
+
+                    <!-- Register Button -->
+                    <button type="submit" class="login-button">
+
+                        <i class="fa-solid fa-user-plus"></i>
+
+                        <span>Create Account</span>
+
+                    </button>
+
+                </form>
+
+
+                <!-- Divider -->
+                <div class="divider">
+                    <span></span>
+                    <p>OR</p>
+                    <span></span>
+                </div>
+
+
+                <!-- Back to Login -->
+                <a href="{{ url_for('login') }}" class="create-account">
+
+                    <i class="fa-solid fa-right-to-bracket"></i>
+
+                    <span>Back to Login</span>
+
+                </a>
+
+
+                <!-- Footer -->
+                <div class="login-footer">
+                    Laundry Management System
+                    <span>© 2025</span>
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+
+        // Show or hide password
+        function togglePassword(fieldId, iconId) {
+
+            const field = document.getElementById(fieldId);
+            const eyeIcon = document.getElementById(iconId);
+
+            if (!field || !eyeIcon) {
+                return;
+            }
+
+            if (field.type === "password") {
+
+                field.type = "text";
+
+                eyeIcon.classList.remove("fa-eye-slash");
+                eyeIcon.classList.add("fa-eye");
+
+            } else {
+
+                field.type = "password";
+
+                eyeIcon.classList.remove("fa-eye");
+                eyeIcon.classList.add("fa-eye-slash");
+
+            }
+        }
+
+        // Validate passwords match before submitting
+        document.querySelector("form[action=\"{{ url_for('register') }}\"]").addEventListener("submit", function (event) {
+
+            const password = document.getElementById("password");
+            const confirmPassword = document.getElementById("confirm_password");
+            const errorBox = document.getElementById("passwordMatchError");
+
+            if (!password || !confirmPassword || !errorBox) {
+                return;
+            }
+
+            if (password.value !== confirmPassword.value) {
+
+                event.preventDefault();
+
+                errorBox.style.display = "flex";
+                password.focus();
+
+            } else {
+
+                errorBox.style.display = "none";
+            }
+
+        });
+
+        // Real-time match indicator
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const password = document.getElementById("password");
+            const confirmPassword = document.getElementById("confirm_password");
+            const errorBox = document.getElementById("passwordMatchError");
+
+            if (!password || !confirmPassword || !errorBox) {
+                return;
+            }
+
+            function checkMatch() {
+
+                if (confirmPassword.value && password.value !== confirmPassword.value) {
+
+                    errorBox.style.display = "flex";
+
+                } else {
+
+                    errorBox.style.display = "none";
+                }
+            }
+
+            password.addEventListener("input", checkMatch);
+            confirmPassword.addEventListener("input", checkMatch);
+
+        });
+
+    </script>
+
+</body>
+</html>

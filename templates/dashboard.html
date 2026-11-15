@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Laundry Management System</title>
+
+    <!-- =====================================================
+         GOOGLE FONT
+         ===================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+    <!-- =====================================================
+         FONT AWESOME
+         ===================================================== -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- =====================================================
+         DASHBOARD CSS
+         ===================================================== -->
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+
+    <!-- =====================================================
+         CHART.JS
+         ===================================================== -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+
+<!-- =========================================================
+     DASHBOARD CONTAINER
+     ========================================================= -->
+
+<div class="dashboard-container">
+
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <!-- Logo -->
+        <div class="sidebar-logo">
+
+            <div class="logo-box">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo" class="logo-img">
+            </div>
+
+            <div class="logo-text">
+                <h2>Laundry</h2>
+                <span>Management System</span>
+            </div>
+
+        </div>
+
+
+        <!-- Navigation -->
+        <nav class="sidebar-nav">
+
+            <!-- Dashboard -->
+            <a href="/dashboard" class="nav-item active">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+
+
+            <!-- Customers -->
+            <a href="/customers" class="nav-item">
+                <i class="fa-solid fa-users"></i>
+                <span>Customers</span>
+            </a>
+
+
+            <!-- Orders -->
+            <a href="/orders" class="nav-item">
+                <i class="fa-solid fa-basket-shopping"></i>
+                <span>Orders</span>
+            </a>
+
+
+       
+
+
+            <!-- Inventory -->
+            <a href="/inventory" class="nav-item">
+                <i class="fa-solid fa-cube"></i>
+                <span>Inventory</span>
+            </a>
+
+
+            <!-- Payments -->
+            <a href="/payments" class="nav-item">
+                <i class="fa-regular fa-credit-card"></i>
+                <span>Payments</span>
+            </a>
+        </nav>
+
+
+        <!-- Sidebar bottom -->
+        <div class="sidebar-bottom">
+
+            <a href="/logout" class="nav-item logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+
+        <!-- Laundry Illustration -->
+        <div class="sidebar-laundry">
+
+            <div class="mini-bubble bubble-one"></div>
+            <div class="mini-bubble bubble-two"></div>
+
+            <div class="mini-machine">
+
+                <div class="mini-machine-top"></div>
+
+                <div class="mini-door">
+                    <div class="mini-water"></div>
+                </div>
+
+            </div>
+
+
+            <div class="mini-towels">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <p>
+                Clean Clothes,<br>
+                Happier Days!
+            </p>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             PAGE CONTENT
+             ================================================= -->
+
+        <section class="page-content">
+
+
+            <!-- =================================================
+                 TOP GRID
+                 ================================================= -->
+
+            <div class="top-grid">
+
+
+                <!-- Welcome Card -->
+                <div class="welcome-card">
+
+                    <div class="welcome-content">
+
+                        <span class="welcome-small">
+                            Welcome back,
+                        </span>
+
+                        <h1>
+                            Jeffrey Trinidad!
+                        </h1>
+
+                        <p>
+                            Here's what's happening with your
+                            laundry shop today.
+                        </p>
+
+
+                    </div>
+
+
+                    <!-- Laundry illustration -->
+                    <div class="welcome-illustration">
+
+                        <div class="welcome-machine">
+
+                            <div class="machine-control">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+
+                            <div class="machine-circle">
+
+                                <div class="machine-water"></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="welcome-basket">
+
+                            <span class="basket-towel white"></span>
+                            <span class="basket-towel blue"></span>
+
+                            <div class="basket-body"></div>
+
+                        </div>
+
+
+                        <div class="welcome-plant">
+
+                            <span class="leaf leaf-a"></span>
+                            <span class="leaf leaf-b"></span>
+                            <span class="leaf leaf-c"></span>
+                            <span class="leaf leaf-d"></span>
+
+                            <div class="plant-pot"></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Quick Actions -->
+                <div class="quick-actions-card">
+
+                    <h2>
+                        Quick Actions
+                    </h2>
+
+
+                    <div class="quick-actions-grid">
+
+                        <a href="/customers?open=add" class="quick-action blue">
+
+                            <i class="fa-solid fa-user-plus"></i>
+
+                            <span>
+                                Add Customer
+                            </span>
+
+                        </a>
+
+
+                        <a href="/orders?open=add" class="quick-action green">
+
+                            <i class="fa-solid fa-cube"></i>
+
+                            <span>
+                                Create Order
+                            </span>
+
+                        </a>
+
+
+                        <a href="/inventory?open=add" class="quick-action orange">
+
+                            <i class="fa-solid fa-box"></i>
+
+                            <span>
+                                Update Inventory
+                            </span>
+
+                        </a>
+
+                        <a href="/payments?open=add" class="quick-action purple">
+
+                            <i class="fa-solid fa-credit-card"></i>
+
+                            <span>
+                                Record Payment
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 STATISTICS
+                 ================================================= -->
+
+            <div class="stats-grid">
+
+
+                <!-- Customers -->
+                <div class="stat-card stat-blue">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+
+                    <div class="stat-content">
+
+                        <span>
+                            Total Customers
+                        </span>
+
+                        <strong>
+                            128
+                        </strong>
+
+                        <small class="positive">
+                            <i class="fa-solid fa-arrow-trend-up"></i>
+                            +12 this month
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Orders -->
+                <div class="stat-card stat-green">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-cube"></i>
+                    </div>
+
+                    <div class="stat-content">
+
+                        <span>
+                            Active Orders
+                        </span>
+
+                        <strong>
+                            24
+                        </strong>
+
+                        <small class="positive">
+                            <i class="fa-solid fa-arrow-trend-up"></i>
+                            +5 this week
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Payments -->
+                <div class="stat-card stat-orange">
+
+                    <div class="stat-icon">
+                        <i class="fa-regular fa-credit-card"></i>
+                    </div>
+
+                    <div class="stat-content">
+
+                        <span>
+                            Total Payments
+                        </span>
+
+                        <strong>
+                            ₱12,450
+                        </strong>
+
+                        <small class="positive">
+                            <i class="fa-solid fa-arrow-trend-up"></i>
+                            +18% this month
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Inventory -->
+                <div class="stat-card stat-purple">
+
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-box"></i>
+                    </div>
+
+                    <div class="stat-content">
+
+                        <span>
+                            Low Stock Items
+                        </span>
+
+                        <strong>
+                            2
+                        </strong>
+
+                        <small class="positive">
+                            <i class="fa-solid fa-arrow-trend-up"></i>
+                            Needs reorder
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 CHARTS
+                 ================================================= -->
+
+            <div class="charts-grid">
+
+
+                <!-- Orders Overview -->
+                <div class="chart-card">
+
+                    <div class="card-header">
+
+                        <h2>
+                            Orders Overview
+                        </h2>
+
+                        <select id="chartPeriod">
+
+                            <option>
+                                This Week
+                            </option>
+
+                            <option>
+                                This Month
+                            </option>
+
+                            <option>
+                                This Year
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="chart-container">
+
+                        <canvas id="ordersChart"></canvas>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- Order Status -->
+                <div class="chart-card status-card">
+
+                    <div class="card-header">
+
+                        <h2>
+                            Order Status
+                        </h2>
+
+                    </div>
+
+
+                    <div class="status-content">
+
+                        <div class="donut-wrapper">
+
+                            <canvas id="statusChart"></canvas>
+
+                            <div class="donut-center">
+
+                                <strong>
+                                    {{ total_orders_count if total_orders_count else 0 }}
+                                </strong>
+
+                                <span>
+                                    Total Orders
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="status-list">
+
+
+                            <div class="status-item">
+
+                                <span class="status-dot pending"></span>
+
+                                <span class="status-name">
+                                    Pending
+                                </span>
+
+                                <strong>
+                                    {{ status_counts.Pending if status_counts else 0 }}
+                                </strong>
+
+                                <small>
+                                    {% if total_orders_count and total_orders_count > 0 %}
+                                        {{ "%.1f"|format((status_counts.Pending / total_orders_count * 100)) }}%
+                                    {% else %}
+                                        0.0%
+                                    {% endif %}
+                                </small>
+
+                            </div>
+
+
+                            <div class="status-item">
+
+                                <span class="status-dot progress"></span>
+
+                                <span class="status-name">
+                                    In Progress
+                                </span>
+
+                                <strong>
+                                    {{ status_counts["In Process"] if status_counts else 0 }}
+                                </strong>
+
+                                <small>
+                                    {% if total_orders_count and total_orders_count > 0 %}
+                                        {{ "%.1f"|format((status_counts["In Process"] / total_orders_count * 100)) }}%
+                                    {% else %}
+                                        0.0%
+                                    {% endif %}
+                                </small>
+
+                            </div>
+
+
+                            <div class="status-item">
+
+                                <span class="status-dot completed"></span>
+
+                                <span class="status-name">
+                                    Completed
+                                </span>
+
+                                <strong>
+                                    {{ status_counts.Claimed if status_counts else 0 }}
+                                </strong>
+
+                                <small>
+                                    {% if total_orders_count and total_orders_count > 0 %}
+                                        {{ "%.1f"|format((status_counts.Claimed / total_orders_count * 100)) }}%
+                                    {% else %}
+                                        0.0%
+                                    {% endif %}
+                                </small>
+
+                            </div>
+
+
+                            <div class="status-item">
+
+                                <span class="status-dot cancelled"></span>
+
+                                <span class="status-name">
+                                    Cancelled
+                                </span>
+
+                                <strong>
+                                    {{ status_counts.Cancelled if status_counts else 0 }}
+                                </strong>
+
+                                <small>
+                                    {% if total_orders_count and total_orders_count > 0 %}
+                                        {{ "%.1f"|format((status_counts.Cancelled / total_orders_count * 100)) }}%
+                                    {% else %}
+                                        0.0%
+                                    {% endif %}
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 BOTTOM SECTION
+                 ================================================= -->
+
+            <div class="bottom-grid">
+
+
+                <!-- Recent Orders -->
+                <div class="orders-card">
+
+                    <div class="card-header">
+
+                        <h2>
+                            Recent Orders
+                        </h2>
+
+                        <a href="/orders">
+                            View All
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                    </div>
+
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>#</th>
+                                    <th>Customer</th>
+                                    <th>Status</th>
+                                    <th>Total</th>
+                                    <th>Date</th>
+                                    <th></th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                {% for order in recent_orders %}
+
+                                <tr>
+
+                                    <td>
+                                        <strong>ORD-{{ "%03d"|format(order.order_id) }}</strong>
+                                    </td>
+
+                                    <td>
+                                        {{ order.customer_name }}
+                                    </td>
+
+                                    <td>
+                                        <span class="order-status status-{{ order.status|lower|replace(' ', '-') }}">
+                                            {{ order.status }}
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <strong>₱{{ "{:,.2f}".format(order.total_amount) }}</strong>
+                                    </td>
+
+                                    <td>
+                                        {{ order.order_date.strftime('%b %d, %Y') if order.order_date else '' }}
+                                    </td>
+
+                                    <td>
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                    </td>
+
+                                </tr>
+
+                                {% else %}
+
+                                <tr>
+                                    <td colspan="6" style="text-align:center; color:#506989; padding:20px;">
+                                        No recent orders
+                                    </td>
+                                </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Recent Activity -->
+                <div class="activity-card">
+
+                    <div class="card-header">
+
+                        <h2>
+                            Recent Activity
+                        </h2>
+
+                        <a href="/reports">
+                            View All
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+
+                    </div>
+
+
+                    <div class="activity-list">
+
+                        {% for activity in activities %}
+
+                        <div class="activity-item">
+
+                            <div class="activity-icon {{ activity.color }}">
+                                <i class="fa-solid {{ activity.icon }}"></i>
+                            </div>
+
+                            <div class="activity-info">
+
+                                <strong>
+                                    {{ activity.text }}
+                                </strong>
+
+                                <span>
+                                    {{ activity.time }}
+                                </span>
+
+                            </div>
+
+                            <time>
+                                {{ activity.time }}
+                            </time>
+
+                        </div>
+
+                        {% else %}
+
+                        <div class="activity-item">
+
+                            <div class="activity-info">
+                                <strong>No recent activity</strong>
+                            </div>
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>                </div>
+
+            </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+    /* =====================================================
+       ORDERS LINE CHART
+       ===================================================== */
+
+    const ordersCanvas =
+        document.getElementById("ordersChart");
+
+    const ordersChart =
+        new Chart(ordersCanvas, {
+
+            type: "line",
+
+            data: {
+
+                labels: [
+                    "Mon",
+                    "Tue",
+                    "Wed",
+                    "Thu",
+                    "Fri",
+                    "Sat",
+                    "Sun"
+                ],
+
+                datasets: [{
+
+                    label: "Orders",
+
+                    data: [
+                        6,
+                        17,
+                        12,
+                        25,
+                        18,
+                        24,
+                        34
+                    ],
+
+                    borderColor: "#1976e8",
+
+                    backgroundColor:
+                        "rgba(25, 118, 232, 0.10)",
+
+                    borderWidth: 3,
+
+                    pointRadius: 5,
+
+                    pointHoverRadius: 7,
+
+                    pointBackgroundColor: "#1976e8",
+
+                    pointBorderColor: "#ffffff",
+
+                    pointBorderWidth: 2,
+
+                    fill: true,
+
+                    tension: 0.4
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+                        display: false
+                    }
+
+                },
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        suggestedMax: 40,
+
+                        grid: {
+                            color: "#e4edf7"
+                        },
+
+                        ticks: {
+                            color: "#314a70"
+                        }
+
+                    },
+
+                    x: {
+
+                        grid: {
+                            color: "#e4edf7"
+                        },
+
+                        ticks: {
+                            color: "#314a70"
+                        }
+
+                    }
+
+                }
+
+            }
+
+        });
+
+
+
+    /* =====================================================
+       ORDER STATUS DONUT CHART
+       ===================================================== */
+
+    const statusCanvas =
+        document.getElementById("statusChart");
+
+    const statusChart =
+        new Chart(statusCanvas, {
+
+            type: "doughnut",
+
+            data: {
+
+                labels: [
+                    "Pending",
+                    "In Process",
+                    "Completed",
+                    "Cancelled"
+                ],
+
+                datasets: [{
+
+                    data: [
+                        {{ status_counts.Pending if status_counts else 0 }},
+                        {{ status_counts["In Process"] if status_counts else 0 }},
+                        {{ status_counts.Claimed if status_counts else 0 }},
+                        {{ status_counts.Cancelled if status_counts else 0 }}
+                    ],
+
+                    backgroundColor: [
+                        "#ff9f1c",
+                        "#2479e9",
+                        "#08a85a",
+                        "#ff5b61"
+                    ],
+
+                    borderWidth: 2,
+
+                    borderColor: "#ffffff"
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                cutout: "68%",
+
+                plugins: {
+
+                    legend: {
+                        display: false
+                    }
+
+                }
+
+            }
+
+        });
+
+    // Auto-refresh dashboard every 30s so order statuses stay live
+    setInterval(function () {
+        window.location.reload();
+    }, 30000);
+
+</script>
+
+</body>
+</html>

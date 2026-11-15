@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Orders | Laundry Management System</title>
+
+    <!-- =====================================================
+         GOOGLE FONT
+         ===================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+    <!-- =====================================================
+         FONT AWESOME
+         ===================================================== -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- =====================================================
+         DASHBOARD CSS
+         ===================================================== -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+
+<!-- =========================================================
+     DASHBOARD CONTAINER
+     ========================================================= -->
+
+<div class="dashboard-container">
+
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <!-- Logo -->
+        <div class="sidebar-logo">
+
+            <div class="logo-box">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo" class="logo-img">
+            </div>
+
+            <div class="logo-text">
+                <h2>Laundry</h2>
+                <span>Management System</span>
+            </div>
+
+        </div>
+
+
+        <!-- Navigation -->
+        <nav class="sidebar-nav">
+
+            <!-- Dashboard -->
+            <a href="{{ url_for('dashboard') }}" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+
+
+            <!-- Customers -->
+            <a href="{{ url_for('customers') }}" class="nav-item">
+                <i class="fa-solid fa-users"></i>
+                <span>Customers</span>
+            </a>
+
+
+            <!-- Orders -->
+            <a href="{{ url_for('orders') }}" class="nav-item active">
+                <i class="fa-solid fa-basket-shopping"></i>
+                <span>Orders</span>
+            </a>
+
+
+    
+
+            <!-- Inventory -->
+            <a href="{{ url_for('inventory') }}" class="nav-item">
+                <i class="fa-solid fa-cube"></i>
+                <span>Inventory</span>
+            </a>
+
+
+            <!-- Payments -->
+            <a href="{{ url_for('payments') }}" class="nav-item">
+                <i class="fa-regular fa-credit-card"></i>
+                <span>Payments</span>
+            </a>
+
+
+         
+
+           
+        </nav>
+
+
+        <!-- Sidebar bottom -->
+        <div class="sidebar-bottom">
+
+            <a href="{{ url_for('logout') }}" class="nav-item logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+
+        <!-- Laundry Illustration -->
+        <div class="sidebar-laundry">
+
+            <div class="mini-bubble bubble-one"></div>
+            <div class="mini-bubble bubble-two"></div>
+
+            <div class="mini-machine">
+
+                <div class="mini-machine-top"></div>
+
+                <div class="mini-door">
+                    <div class="mini-water"></div>
+                </div>
+
+            </div>
+
+
+            <div class="mini-towels">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <p>
+                Clean Clothes,<br>
+                Happier Days!
+            </p>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             PAGE CONTENT
+             ================================================= -->
+
+        <section class="page-content">
+
+
+            <!-- =============================================
+                 PAGE HEADER
+                 ============================================= -->
+
+            <div class="page-head">
+
+                <div>
+                    <h1>Orders</h1>
+                    <p>Track laundry processing stages and payment status.</p>
+                </div>
+
+                <div class="head-actions">
+
+                    <div class="table-search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input
+                            type="text"
+                            placeholder="Search orders..."
+                            id="orderSearch"
+                        >
+                    </div>
+
+                    <button type="button" class="primary-button" id="openAddOrder">
+                        <i class="fa-solid fa-plus"></i>
+                        New Order
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 STATS
+                 ============================================= -->
+
+            <div class="stats-grid customer-stats">
+
+                <div class="stat-card stat-purple">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span>Total Orders</span>
+                        <strong>{{ total_orders }}</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-orange">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span>Pending</span>
+                        <strong>{{ pending_count }}</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-blue">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-spinner"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span>In Process</span>
+                        <strong>{{ in_process_count }}</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-green">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span>Claimed</span>
+                        <strong>{{ claimed_count }}</strong>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 ORDER TABLE
+                 ============================================= -->
+
+            <div class="chart-card customer-table-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Order List
+                    </h2>
+
+                    <span class="card-count">
+                        {{ total_orders }} total
+                    </span>
+
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Order Date</th>
+                                <th>Status</th>
+                                <th>Payment</th>
+                                <th>Total Amount</th>
+                                <th>Action</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for order in rows %}
+
+                            <tr>
+
+                                <td>
+                                    #{{ order.order_id }}
+                                </td>
+
+                                <td>
+                                    <div class="user-cell">
+
+                                        <div class="user-avatar-sm">
+                                            {{ order.customer_name[0]|upper if order.customer_name else '?' }}
+                                        </div>
+
+                                        <div>
+                                            <strong>
+                                                {{ order.customer_name or 'Unknown' }}
+                                            </strong>
+                                        </div>
+
+                                    </div>
+                                </td>
+
+                                <td>
+                                    {{ order.order_date.strftime('%b %d, %Y') if order.order_date else '-' }}
+                                </td>
+
+                                <td>
+                                    <span class="order-status status-{{ order.status|lower|replace(' ', '-') }}">
+                                        {{ order.status }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="pay-badge pay-{{ 'paid' if order.payment_status == 'Paid' else 'unpaid' }}">
+                                        {{ order.payment_status }}
+                                    </span>
+                                    <small style="display:block; color:#506989; margin-top:4px;">
+                                        {{ order.payment_method or 'Cash' }}
+                                    </small>
+                                </td>
+
+                                <td>
+                                    <strong>₱{{ "{:,.2f}".format(order.total_amount) }}</strong>
+                                </td>
+
+                                <td>
+                                    <button
+                                        type="button"
+                                        class="table-action js-edit-order"
+                                        data-order-id="{{ order.order_id }}"
+                                        data-status="{{ order.status }}"
+                                        title="Update status"
+                                    >
+                                        <i class="fa-solid fa-pen"></i>
+                                        {% if order.payment_status != 'Paid' %}
+                                        <span class="table-action-badge js-mark-paid" data-order-id="{{ order.order_id }}" title="Mark as Paid">₱</span>
+                                        {% endif %}
+                                    </button>
+                                </td>
+
+                            </tr>
+
+                            {% else %}
+
+                            <tr>
+                                <td colspan="7" class="empty-row">
+                                    No orders found.
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     NEW ORDER MODAL
+     ========================================================= -->
+
+<div class="modal-overlay" id="newOrderModal">
+
+    <div class="modal-card">
+
+        <div class="modal-header">
+
+            <h2>
+                <i class="fa-solid fa-basket-shopping"></i>
+                New Laundry Order
+            </h2>
+
+            <button type="button" class="modal-close" data-close-modal>
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <form method="POST" action="{{ url_for('orders') }}">
+
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="customer_id">Customer</label>
+                    <select id="customer_id" name="customer_id" required>
+                        <option value="">Select a customer</option>
+                        {% for customer in customers %}
+                        <option value="{{ customer.customer_id }}">
+                            {{ customer.customer_name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="total_amount">Total Amount (₱)</label>
+                    <input
+                        type="number"
+                        id="total_amount"
+                        name="total_amount"
+                        step="0.01"
+                        min="0"
+                        placeholder="0.00"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status" name="status">
+                        <option>Pending</option>
+                        <option>In Process</option>
+                        <option>Ready</option>
+                        <option>Claimed</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="payment_method">Payment Method</label>
+                    <select id="payment_method" name="payment_method">
+                        <option value="Cash">Cash</option>
+                        <option value="GCash">GCash</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn-secondary" data-close-modal>
+                    Cancel
+                </button>
+
+                <button type="submit" class="primary-button">
+                    <i class="fa-solid fa-check"></i>
+                    Create Order
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     UPDATE STATUS MODAL
+     ========================================================= -->
+
+<div class="modal-overlay" id="updateOrderModal">
+
+    <div class="modal-card modal-card-sm">
+
+        <div class="modal-header">
+
+            <h2>
+                <i class="fa-solid fa-pen"></i>
+                Update Order #<span id="editOrderId"></span>
+            </h2>
+
+            <button type="button" class="modal-close" data-close-modal>
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <form method="POST" action="{{ url_for('orders') }}">
+
+            <input type="hidden" name="action" value="update_status">
+            <input type="hidden" name="order_id" id="editOrderIdInput">
+
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="edit_status">Status</label>
+                    <select id="edit_status" name="status">
+                        <option>Pending</option>
+                        <option>In Process</option>
+                        <option>Ready</option>
+                        <option>Claimed</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn-secondary" data-close-modal>
+                    Cancel
+                </button>
+
+                <button type="submit" class="primary-button">
+                    <i class="fa-solid fa-check"></i>
+                    Update
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+    // Auto-open new order modal when requested via query param
+    (function () {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("open") === "add") {
+            const modal = document.getElementById("newOrderModal");
+            if (modal) modal.classList.add("active");
+        }
+    })();
+
+    // Generic modal handling
+    function openModal(id) {
+        document.getElementById(id).classList.add("active");
+    }
+
+    function closeModal(element) {
+        element.closest(".modal-overlay").classList.remove("active");
+    }
+
+    // New order modal
+    document.getElementById("openAddOrder")
+        .addEventListener("click", function () {
+            openModal("newOrderModal");
+        });
+
+    // Update order modal
+    document.querySelectorAll(".js-edit-order")
+        .forEach(function (button) {
+            button.addEventListener("click", function () {
+
+                const orderId = this.dataset.orderId;
+                const status = this.dataset.status;
+
+                document.getElementById("editOrderId").textContent = orderId;
+                document.getElementById("editOrderIdInput").value = orderId;
+                document.getElementById("edit_status").value = status;
+
+                openModal("updateOrderModal");
+
+            });
+        });
+
+    // Mark as paid
+    document.querySelectorAll(".js-mark-paid")
+        .forEach(function (button) {
+            button.addEventListener("click", function () {
+                const orderId = this.dataset.orderId;
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = "{{ url_for('orders') }}";
+                const actionInput = document.createElement('input');
+                actionInput.type = 'hidden';
+                actionInput.name = 'action';
+                actionInput.value = 'mark_paid';
+                const orderInput = document.createElement('input');
+                orderInput.type = 'hidden';
+                orderInput.name = 'order_id';
+                orderInput.value = orderId;
+                form.appendChild(actionInput);
+                form.appendChild(orderInput);
+                document.body.appendChild(form);
+                form.submit();
+            });
+        });
+
+    // Close buttons
+    document.querySelectorAll("[data-close-modal]")
+        .forEach(function (button) {
+            button.addEventListener("click", function () {
+                closeModal(this);
+            });
+        });
+
+    // Close on overlay click
+    document.querySelectorAll(".modal-overlay")
+        .forEach(function (overlay) {
+            overlay.addEventListener("click", function (event) {
+                if (event.target === this) {
+                    this.classList.remove("active");
+                }
+            });
+        });
+
+    // Close on Escape
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            document.querySelectorAll(".modal-overlay.active")
+                .forEach(function (overlay) {
+                    overlay.classList.remove("active");
+                });
+        }
+    });
+
+    // Search orders
+    document.getElementById("orderSearch")
+        .addEventListener("input", function () {
+
+            const query = this.value.toLowerCase();
+
+            document.querySelectorAll(
+                ".customer-table-card tbody tr"
+            ).forEach(function (row) {
+
+                row.style.display =
+                    row.textContent.toLowerCase().includes(query)
+                        ? ""
+                        : "none";
+
+            });
+
+        });
+
+</script>
+
+</body>
+</html>

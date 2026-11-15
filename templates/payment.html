@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Payments | Laundry Management System</title>
+
+    <!-- =====================================================
+         GOOGLE FONT
+         ===================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+    <!-- =====================================================
+         FONT AWESOME
+         ===================================================== -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- =====================================================
+         DASHBOARD CSS
+         ===================================================== -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+
+<!-- =========================================================
+     DASHBOARD CONTAINER
+     ========================================================= -->
+
+<div class="dashboard-container">
+
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <!-- Logo -->
+        <div class="sidebar-logo">
+
+            <div class="logo-box">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo" class="logo-img">
+            </div>
+
+            <div class="logo-text">
+                <h2>Laundry</h2>
+                <span>Management System</span>
+            </div>
+
+        </div>
+
+
+        <!-- Navigation -->
+        <nav class="sidebar-nav">
+
+            <!-- Dashboard -->
+            <a href="{{ url_for('dashboard') }}" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+
+
+            <!-- Customers -->
+            <a href="{{ url_for('customers') }}" class="nav-item">
+                <i class="fa-solid fa-users"></i>
+                <span>Customers</span>
+            </a>
+
+
+            <!-- Orders -->
+            <a href="{{ url_for('orders') }}" class="nav-item">
+                <i class="fa-solid fa-basket-shopping"></i>
+                <span>Orders</span>
+            </a>
+
+
+            <!-- Inventory -->
+            <a href="{{ url_for('inventory') }}" class="nav-item">
+                <i class="fa-solid fa-cube"></i>
+                <span>Inventory</span>
+            </a>
+
+
+            <!-- Payments -->
+            <a href="{{ url_for('payments') }}" class="nav-item active">
+                <i class="fa-regular fa-credit-card"></i>
+                <span>Payments</span>
+            </a>
+
+        </nav>
+
+
+        <!-- Sidebar bottom -->
+        <div class="sidebar-bottom">
+
+            <a href="{{ url_for('logout') }}" class="nav-item logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+
+        <!-- Laundry Illustration -->
+        <div class="sidebar-laundry">
+
+            <div class="mini-bubble bubble-one"></div>
+            <div class="mini-bubble bubble-two"></div>
+
+            <div class="mini-machine">
+
+                <div class="mini-machine-top"></div>
+
+                <div class="mini-door">
+                    <div class="mini-water"></div>
+                </div>
+
+            </div>
+
+
+            <div class="mini-towels">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <p>
+                Clean Clothes,<br>
+                Happier Days!
+            </p>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             PAGE CONTENT
+             ================================================= -->
+
+        <section class="page-content">
+
+
+            <!-- =============================================
+                 PAGE HEADER
+                 ============================================= -->
+
+            <div class="page-head">
+
+                <div>
+                    <h1>Payments</h1>
+                    <p>Track customer transactions and revenue collection.</p>
+                </div>
+
+                <div class="head-actions">
+
+                    <div class="table-search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input
+                            type="text"
+                            placeholder="Search payments..."
+                            id="paymentSearch"
+                        >
+                    </div>
+
+                    <button type="button" class="primary-button" id="openAddPayment">
+                        <i class="fa-solid fa-plus"></i>
+                        Record Payment
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 STATS
+                 ============================================= -->
+
+            <div class="stats-grid customer-stats">
+
+                <div class="stat-card stat-green">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-sack-dollar"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span>Total Collected</span>
+                        <strong>₱{{ "{:,.2f}".format(total_collected) }}</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-blue">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-receipt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span>Transactions</span>
+                        <strong>{{ total_payments }}</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-orange">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-calculator"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span>Average Payment</span>
+                        <strong>₱{{ "{:,.2f}".format(average_payment) }}</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-purple">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-calendar-day"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span>This Month</span>
+                        <strong>₱{{ "{:,.2f}".format(this_month_total) }}</strong>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 PAYMENT TABLE
+                 ============================================= -->
+
+            <div class="chart-card customer-table-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Transaction List
+                    </h2>
+
+                    <div class="head-actions">
+
+                        <select class="filter-select" id="methodFilter">
+                            <option value="all">All Methods</option>
+                            <option value="cash">Cash</option>
+                            <option value="gcash">GCash</option>
+                           
+                        </select>
+
+                        <span class="card-count">
+                            {{ total_payments }} total
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>ID</th>
+                                <th>Order</th>
+                                <th>Amount Paid</th>
+                                <th>Method</th>
+                                <th>Date &amp; Time</th>
+                                <th>Received By</th>
+                                <th>Settlement</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="paymentBody">
+
+                            {% for payment in rows %}
+
+                            <tr data-method="{{ payment.method_key }}">
+
+                                <td>
+                                    #{{ payment.payment_id }}
+                                </td>
+
+                                <td>
+                                    <div class="user-cell">
+
+                                        <div class="user-avatar-sm">
+                                            {{ payment.customer_name[0]|upper if payment.customer_name else '?' }}
+                                        </div>
+
+                                        <div>
+                                            <strong>
+                                                Order #{{ payment.order_id }}
+                                            </strong>
+                                            <br>
+                                            <small class="cell-sub">
+                                                {{ payment.customer_name or 'Unknown customer' }}
+                                            </small>
+                                        </div>
+
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <strong>₱{{ "{:,.2f}".format(payment.amount_paid) }}</strong>
+                                </td>
+
+                                <td>
+                                    <span class="method-badge method-{{ payment.method_key }}">
+                                        <i class="fa-solid {{ payment.method_icon }}"></i>
+                                        {{ payment.payment_method }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    {{ payment.payment_date.strftime('%b %d, %Y') if payment.payment_date else '-' }}
+                                    {% if payment.payment_date %}
+                                    <br>
+                                    <small class="cell-sub">
+                                        {{ payment.payment_date.strftime('%I:%M %p') }}
+                                    </small>
+                                    {% endif %}
+                                </td>
+
+                                <td>
+                                    {{ payment.received_by_name or 'User #' ~ payment.received_by }}
+                                </td>
+
+                                <td>
+                                    <span class="order-status settle-{{ payment.settlement_key }}">
+                                        {{ payment.settlement_label }}
+                                    </span>
+                                </td>
+
+                            </tr>
+
+                            {% else %}
+
+                            <tr>
+                                <td colspan="7" class="empty-row">
+                                    No payments recorded yet.
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     RECORD PAYMENT MODAL
+     ========================================================= -->
+
+<div class="modal-overlay" id="addPaymentModal">
+
+    <div class="modal-card">
+
+        <div class="modal-header">
+
+            <h2>
+                <i class="fa-solid fa-receipt"></i>
+                Record Payment
+            </h2>
+
+            <button type="button" class="modal-close" data-close-modal>
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <form method="POST" action="{{ url_for('payments') }}">
+
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="order_id">Order</label>
+                    <select id="order_id" name="order_id" required>
+                        <option value="">Select an order</option>
+                        {% for order in unpaid_orders %}
+                        <option value="{{ order.order_id }}">
+                            #{{ order.order_id }} — {{ order.customer_name or 'Unknown' }}
+                            (₱{{ "{:,.2f}".format(order.balance) }} due)
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="amount_paid">Amount Paid (₱)</label>
+                    <input
+                        type="number"
+                        id="amount_paid"
+                        name="amount_paid"
+                        step="0.01"
+                        min="0.01"
+                        placeholder="0.00"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="payment_method">Payment Method</label>
+                    <select id="payment_method" name="payment_method" required>
+                        <option>Cash</option>
+                        <option>GCash</option>
+                        <option>Card</option>
+                    </select>
+                </div>
+
+                {% if not unpaid_orders %}
+                <p class="form-hint">
+                    Every order is fully paid. No outstanding balances to collect.
+                </p>
+                {% endif %}
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn-secondary" data-close-modal>
+                    Cancel
+                </button>
+
+                <button type="submit" class="primary-button" {% if not unpaid_orders %}disabled{% endif %}>
+                    <i class="fa-solid fa-check"></i>
+                    Record Payment
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+    // Auto-open record payment modal when requested via query param
+    (function () {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("open") === "add") {
+            const modal = document.getElementById("addPaymentModal");
+            if (modal) modal.classList.add("active");
+        }
+    })();
+
+    function openModal(id) {
+        document.getElementById(id).classList.add("active");
+    }
+
+    // Record payment modal
+    document.getElementById("openAddPayment")
+        .addEventListener("click", function () {
+            openModal("addPaymentModal");
+        });
+
+    // Close buttons
+    document.querySelectorAll("[data-close-modal]")
+        .forEach(function (button) {
+            button.addEventListener("click", function () {
+                this.closest(".modal-overlay").classList.remove("active");
+            });
+        });
+
+    // Close on overlay click
+    document.querySelectorAll(".modal-overlay")
+        .forEach(function (overlay) {
+            overlay.addEventListener("click", function (event) {
+                if (event.target === this) {
+                    this.classList.remove("active");
+                }
+            });
+        });
+
+    // Close on Escape
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            document.querySelectorAll(".modal-overlay.active")
+                .forEach(function (overlay) {
+                    overlay.classList.remove("active");
+                });
+        }
+    });
+
+    // Search + filter
+    function applyFilters() {
+
+        const query = document.getElementById("paymentSearch")
+            .value.toLowerCase();
+
+        const method = document.getElementById("methodFilter")
+            .value;
+
+        document.querySelectorAll("#paymentBody tr")
+            .forEach(function (row) {
+
+                if (!row.dataset.method) {
+                    return;
+                }
+
+                const matchesText =
+                    row.textContent.toLowerCase().includes(query);
+
+                const matchesMethod =
+                    method === "all" || row.dataset.method === method;
+
+                row.style.display =
+                    matchesText && matchesMethod ? "" : "none";
+
+            });
+
+    }
+
+    document.getElementById("paymentSearch")
+        .addEventListener("input", applyFilters);
+
+    document.getElementById("methodFilter")
+        .addEventListener("change", applyFilters);
+
+</script>
+
+</body>
+</html>

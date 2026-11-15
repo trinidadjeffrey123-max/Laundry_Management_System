@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Customers | Laundry Management System</title>
+
+    <!-- =====================================================
+         GOOGLE FONT
+         ===================================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+
+    <!-- =====================================================
+         FONT AWESOME
+         ===================================================== -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- =====================================================
+         DASHBOARD CSS
+         ===================================================== -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+
+<!-- =========================================================
+     DASHBOARD CONTAINER
+     ========================================================= -->
+
+<div class="dashboard-container">
+
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+        <!-- Logo -->
+        <div class="sidebar-logo">
+
+            <div class="logo-box">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo" class="logo-img">
+            </div>
+
+            <div class="logo-text">
+                <h2>Laundry</h2>
+                <span>Management System</span>
+            </div>
+
+        </div>
+
+
+        <!-- Navigation -->
+        <nav class="sidebar-nav">
+
+            <!-- Dashboard -->
+            <a href="/dashboard" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                <span>Dashboard</span>
+            </a>
+
+
+            <!-- Customers -->
+            <a href="/customers" class="nav-item active">
+                <i class="fa-solid fa-users"></i>
+                <span>Customers</span>
+            </a>
+
+
+            <!-- Orders -->
+            <a href="/orders" class="nav-item">
+                <i class="fa-solid fa-basket-shopping"></i>
+                <span>Orders</span>
+            </a>
+
+
+      
+
+
+            <!-- Inventory -->
+            <a href="/inventory" class="nav-item">
+                <i class="fa-solid fa-cube"></i>
+                <span>Inventory</span>
+            </a>
+
+
+            <!-- Payments -->
+            <a href="/payments" class="nav-item">
+                <i class="fa-regular fa-credit-card"></i>
+                <span>Payments</span>
+            </a>
+
+
+          
+        </nav>
+
+
+        <!-- Sidebar bottom -->
+        <div class="sidebar-bottom">
+
+            <a href="/logout" class="nav-item logout">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+
+        </div>
+
+
+        <!-- Laundry Illustration -->
+        <div class="sidebar-laundry">
+
+            <div class="mini-bubble bubble-one"></div>
+            <div class="mini-bubble bubble-two"></div>
+
+            <div class="mini-machine">
+
+                <div class="mini-machine-top"></div>
+
+                <div class="mini-door">
+                    <div class="mini-water"></div>
+                </div>
+
+            </div>
+
+
+            <div class="mini-towels">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <p>
+                Clean Clothes,<br>
+                Happier Days!
+            </p>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             PAGE CONTENT
+             ================================================= -->
+
+        <section class="page-content">
+
+
+            <!-- =============================================
+                 PAGE HEADER
+                 ============================================= -->
+
+            <div class="page-head">
+
+                <div>
+                    <h1>Customers</h1>
+                    <p>Manage customer details and contact information.</p>
+                </div>
+
+                <div class="head-actions">
+
+                    <div class="table-search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input
+                            type="text"
+                            placeholder="Search customers..."
+                            id="customerSearch"
+                        >
+                    </div>
+
+                    <button type="button" class="primary-button" id="openAddCustomer">
+                        <i class="fa-solid fa-user-plus"></i>
+                        Add Customer
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 STATS
+                 ============================================= -->
+
+            <div class="stats-grid customer-stats">
+
+                <div class="stat-card stat-blue">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span>Total Customers</span>
+                        <strong>{{ total_customers }}</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-green">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span>Added This Month</span>
+                        <strong>{{ new_this_month }}</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-orange">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-phone"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span>With Phone</span>
+                        <strong>{{ with_phone }}</strong>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-purple">
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span>With Address</span>
+                        <strong>{{ with_address }}</strong>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 CUSTOMER TABLE
+                 ============================================= -->
+
+            <div class="chart-card customer-table-card">
+
+                <div class="card-header">
+
+                    <h2>
+                        Customer List
+                    </h2>
+
+                    <span class="card-count">
+                        {{ total_customers }} total
+                    </span>
+
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                                <th>Date Added</th>
+                                <th>Action</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for customer in rows %}
+
+                            <tr>
+
+                                <td>
+                                    #{{ customer.customer_id }}
+                                </td>
+
+                                <td>
+                                    <div class="user-cell">
+
+                                        <div class="user-avatar-sm">
+                                            {{ customer.customer_name[0]|upper }}
+                                        </div>
+
+                                        <div>
+                                            <strong>
+                                                {{ customer.customer_name }}
+                                            </strong>
+                                        </div>
+
+                                    </div>
+                                </td>
+
+                                <td>
+                                    {{ customer.phone or '-' }}
+                                </td>
+
+                                <td>
+                                    {{ customer.address or '-' }}
+                                </td>
+
+                                <td>
+                                    {{ customer.created_at.strftime('%b %d, %Y') if customer.created_at else '-' }}
+                                </td>
+
+                                <td>
+                                    <a href="{{ url_for('orders') }}" class="table-action">
+                                        <i class="fa-solid fa-basket-shopping"></i>
+                                    </a>
+                                </td>
+
+                            </tr>
+
+                            {% else %}
+
+                            <tr>
+                                <td colspan="6" class="empty-row">
+                                    No customers found.
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     ADD CUSTOMER MODAL
+     ========================================================= -->
+
+<div class="modal-overlay" id="addCustomerModal">
+
+    <div class="modal-card">
+
+        <div class="modal-header">
+
+            <h2>
+                <i class="fa-solid fa-user-plus"></i>
+                Add New Customer
+            </h2>
+
+            <button type="button" class="modal-close" id="closeModal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <form method="POST" action="{{ url_for('customers') }}">
+
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="customer_name">Customer Name</label>
+                    <input
+                        type="text"
+                        id="customer_name"
+                        name="customer_name"
+                        placeholder="Enter customer name"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input
+                        type="text"
+                        id="phone"
+                        name="phone"
+                        placeholder="Enter phone number"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <input
+                        type="text"
+                        id="address"
+                        name="address"
+                        placeholder="Enter address"
+                    >
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn-secondary" id="cancelModal">
+                    Cancel
+                </button>
+
+                <button type="submit" class="primary-button">
+                    <i class="fa-solid fa-check"></i>
+                    Save Customer
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     ========================================================= -->
+
+<script>
+
+    // Auto-open add customer modal when requested via query param
+    (function () {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("open") === "add") {
+            const modal = document.getElementById("addCustomerModal");
+            if (modal) modal.classList.add("active");
+        }
+    })();
+
+    // Open modal
+    document.getElementById("openAddCustomer")
+        .addEventListener("click", function () {
+            document.getElementById("addCustomerModal")
+                .classList.add("active");
+        });
+
+    // Close modal
+    function closeModal() {
+        document.getElementById("addCustomerModal")
+            .classList.remove("active");
+    }
+
+    document.getElementById("closeModal")
+        .addEventListener("click", closeModal);
+
+    document.getElementById("cancelModal")
+        .addEventListener("click", closeModal);
+
+    // Close on overlay click
+    document.getElementById("addCustomerModal")
+        .addEventListener("click", function (event) {
+            if (event.target === this) {
+                closeModal();
+            }
+        });
+
+    // Close on Escape
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeModal();
+        }
+    });
+
+    // Search customers
+    document.getElementById("customerSearch")
+        .addEventListener("input", function () {
+
+            const query = this.value.toLowerCase();
+
+            const rows = document.querySelectorAll(
+                ".customer-table-card tbody tr"
+            );
+
+            rows.forEach(function (row) {
+
+                row.style.display =
+                    row.textContent.toLowerCase().includes(query)
+                        ? ""
+                        : "none";
+
+            });
+
+        });
+
+    // Ctrl + K shortcut
+    document.addEventListener("keydown", function (event) {
+
+        if (
+            (event.ctrlKey || event.metaKey) &&
+            event.key.toLowerCase() === "k"
+        ) {
+
+            event.preventDefault();
+
+            document.getElementById("customerSearch")
+                .focus();
+
+        }
+
+    });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Laundry Management System</title>
+
+
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Link to the separate CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="login-page">
+
+        <!-- ================= LEFT BRANDING SECTION ================= -->
+        <section class="brand-section">
+
+            <!-- Decorative bubbles -->
+            <span class="bubble bubble-1"></span>
+            <span class="bubble bubble-2"></span>
+            <span class="bubble bubble-3"></span>
+            <span class="bubble bubble-4"></span>
+
+            <!-- Logo -->
+            <div class="brand-logo">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-shirt"></i>
+                </div>
+
+                <div>
+                    <h2>Laundry</h2>
+                    <span>Management System</span>
+                </div>
+            </div>
+
+            <!-- Main heading -->
+            <div class="brand-content">
+                <h1>
+                    Smarter Laundry
+                    <span>Management</span>
+                </h1>
+
+                <p>
+                    Manage customers, orders, services, inventory
+                    and payments — all in one place.
+                </p>
+
+                <!-- Features -->
+                <div class="feature-list">
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <span>Fast & Reliable</span>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <span>Easy to Manage</span>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-chart-column"></i>
+                        </div>
+                        <span>Better Service</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Laundry illustration -->
+            <div class="laundry-illustration">
+
+                <div class="washing-machine">
+                    <div class="machine-top">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <div class="machine-door">
+                        <div class="machine-glass">
+                            <div class="water"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Basket -->
+                <div class="laundry-basket">
+                    <div class="towel towel-white"></div>
+                    <div class="towel towel-blue"></div>
+                    <div class="towel towel-light"></div>
+
+                    <div class="basket-body"></div>
+                </div>
+
+                <!-- Plant -->
+                <div class="plant">
+                    <div class="leaf leaf-1"></div>
+                    <div class="leaf leaf-2"></div>
+                    <div class="leaf leaf-3"></div>
+                    <div class="leaf leaf-4"></div>
+                    <div class="plant-pot"></div>
+                </div>
+
+            </div>
+
+            <div class="tagline">
+                Clean Clothes, Happier Days!
+            </div>
+
+        </section>
+
+
+        <!-- ================= RIGHT LOGIN SECTION ================= -->
+        <section class="login-section">
+
+            <div class="login-card">
+
+                <!-- Decorative stars -->
+                <div class="sparkle sparkle-one">✦</div>
+                <div class="sparkle sparkle-two">✦</div>
+
+                <div class="login-header">
+                    <span>Welcome Back!</span>
+
+                    <h2>Login to Your Account</h2>
+
+                    <p>
+                        Access the Laundry Management System
+                    </p>
+                </div>
+
+
+                <!-- Error messages -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="login-error" role="alert">
+                                <i class="fa-solid fa-circle-exclamation"></i>
+                                <span>{{ message }}</span>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+
+                <!-- Flask Login Form -->
+                <form action="{{ url_for('login') }}" method="POST" autocomplete="off">
+
+                    <!-- Username -->
+                    <div class="form-group">
+
+                        <label for="username">Username</label>
+
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-user"></i>
+
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                placeholder="Enter your username"
+                                autocomplete="off"
+                                autocapitalize="none"
+                                autocorrect="off"
+                                spellcheck="false"
+                                required
+                            >
+                        </div>
+
+                    </div>
+
+
+                    <!-- Password -->
+                    <div class="form-group">
+
+                        <label for="password">Password</label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-lock"></i>
+
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="new-password"
+                                spellcheck="false"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="password-toggle"
+                                onclick="togglePassword()"
+                            >
+                                <i class="fa-solid fa-eye-slash" id="eyeIcon"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Login Button -->
+                    <button type="submit" class="login-button">
+
+                        <i class="fa-solid fa-right-to-bracket"></i>
+
+                        <span>Login</span>
+
+                    </button>
+
+                </form>
+
+
+                <!-- Divider -->
+                <div class="divider">
+                    <span></span>
+                    <p>OR</p>
+                    <span></span>
+                </div>
+
+
+                <!-- Create Account -->
+               <a href="{{ url_for('register') }}" class="create-account">
+
+                    <i class="fa-solid fa-user-plus"></i>
+
+                    <span>Create an Account</span>
+
+                </a>
+
+
+                <!-- Footer -->
+                <div class="login-footer">
+                    Laundry Management System
+                    <span>© 2025</span>
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+
+        // Show or hide password
+        function togglePassword() {
+
+            const password = document.getElementById("password");
+            const eyeIcon = document.getElementById("eyeIcon");
+
+            if (password.type === "password") {
+
+                password.type = "text";
+
+                eyeIcon.classList.remove("fa-eye-slash");
+                eyeIcon.classList.add("fa-eye");
+
+            } else {
+
+                password.type = "password";
+
+                eyeIcon.classList.remove("fa-eye");
+                eyeIcon.classList.add("fa-eye-slash");
+
+            }
+        }
+
+
+        // Prevent the browser from autofilling or restoring credentials.
+        // Marking the fields readonly stops Chrome from populating them;
+        // the attribute is dropped on first focus so typing still works.
+        window.addEventListener("DOMContentLoaded", function () {
+
+            ["username", "password"].forEach(function (id) {
+
+                const field = document.getElementById(id);
+
+                if (!field) {
+                    return;
+                }
+
+                field.value = "";
+                field.setAttribute("readonly", "readonly");
+
+                field.addEventListener("focus", function () {
+                    this.removeAttribute("readonly");
+                }, { once: true });
+
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
